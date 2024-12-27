@@ -7,19 +7,31 @@ namespace AdminPanelPlugin.Menus
     {
         private readonly AdminPanelPlugin _plugin;
 
-        public string MenuContext => "ItemsMenu";
-
         public ItemsMenu(AdminPanelPlugin plugin)
         {
             _plugin = plugin;
         }
 
+        public string MenuContext => "ItemsMenu";
+
         public ChatMenu GetChatMenu(CCSPlayerController player)
         {
-            var chatMenu = new ChatMenu("*** Items Menu ***");
-            chatMenu.AddMenuOption("1. Guns", (p, option) => p.PrintToChat("Guns selected (not implemented yet)."));
-            chatMenu.AddMenuOption("2. Other", (p, option) => p.PrintToChat("Other selected (not implemented yet)."));
-            chatMenu.AddMenuOption("3. Back", (p, option) => _plugin.OpenMenu(p, new AdminMainMenu(_plugin)));
+            var chatMenu = new ChatMenu("Items Menu");
+
+            chatMenu.AddMenuOption("1. Guns", (playerController, menuOption) =>
+            {
+                _plugin.OpenMenu(playerController, new GunGiveMenu(_plugin));
+            });
+
+            chatMenu.AddMenuOption("2. Other Items (Not Implemented)", (playerController, menuOption) =>
+            {
+                playerController.PrintToChat("Other items menu is not implemented yet.");
+            });
+
+            chatMenu.AddMenuOption("3. Exit", (playerController, menuOption) =>
+            {
+                _plugin.ExitAdminMenu(playerController);
+            });
 
             return chatMenu;
         }
@@ -29,13 +41,13 @@ namespace AdminPanelPlugin.Menus
             switch (choice)
             {
                 case 1:
-                    player.PrintToChat("Guns selected.");
+                    plugin.OpenMenu(player, new GunGiveMenu(plugin));
                     break;
                 case 2:
-                    player.PrintToChat("Other selected.");
+                    player.PrintToChat("Other items menu is not implemented yet.");
                     break;
                 case 3:
-                    plugin.OpenMenu(player, new AdminMainMenu(plugin));
+                    plugin.ExitAdminMenu(player);
                     break;
                 default:
                     player.PrintToChat("Invalid option.");

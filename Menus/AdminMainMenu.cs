@@ -17,6 +17,7 @@ namespace AdminPanelPlugin.Menus
         public ChatMenu GetChatMenu(CCSPlayerController player)
         {
             var chatMenu = new ChatMenu("*** Admin Panel ***");
+
             chatMenu.AddMenuOption("1. Punish", (p, option) => _plugin.OpenMenu(p, new PunishMenu(_plugin)));
             chatMenu.AddMenuOption("2. Roles", (p, option) => _plugin.OpenMenu(p, new RolesMenu(_plugin)));
             chatMenu.AddMenuOption("3. Map Settings", (p, option) => _plugin.OpenMenu(p, new MapSettingsMenu(_plugin)));
