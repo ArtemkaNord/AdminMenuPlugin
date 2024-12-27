@@ -1,0 +1,4 @@
+{
+    "name": "AdminPanelPlugin",
+    "entrypoint": "AdminPanelPlugin.AdminPanelPlugin"
+  }
